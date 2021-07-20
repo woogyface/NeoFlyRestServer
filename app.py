@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, url_for
+from flask import Flask, request, jsonify, url_for, make_response
 from NFDB import nfdb
 
 dbfile = "C:/ProgramData/NeoFly/common.db"
@@ -9,6 +9,10 @@ def has_no_empty_params(rule):
 	defaults = rule.defaults if rule.defaults is not None else ()
 	arguments = rule.arguments if rule.arguments is not None else ()
 	return len(defaults) >= len(arguments)
+
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
 
 @app.route('/', methods=['GET'])
 def home():
