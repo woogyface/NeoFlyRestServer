@@ -15,12 +15,18 @@ class nfdb():
 		if (connection):
 			connection.close()
 
-	def query(self, connection, sql):
+	def fetchall(self, connection, sql):
 		cursor = connection.cursor()
 		cursor.execute(sql)
 
 		rows = cursor.fetchall()
-		for row in rows:
-			print(row)
-
 		return rows
+
+	def query(self, connection, sql):
+		return self.fetchall(connection, sql)
+
+	def tables(self, connection):
+		return self.fetchall(connection, "SELECT name FROM sqlite_master WHERE type ='table' AND name NOT LIKE 'sqlite_%';")
+
+	def header(self, connection, table):
+		return self.fetchall(connection, "SELECT name FROM PRAGMA_TABLE_INFO('"+table+"');")

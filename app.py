@@ -15,6 +15,20 @@ def query(sql):
 	data = db.query(con, sql)
 	db.diconnect(con)
 	return jsonify(data)
+	
+@app.route('/tables', methods=['GET'])
+def tables():
+	con = db.connect(dbfile)
+	data = db.tables(con)
+	db.diconnect(con)
+	return jsonify(data)
+	
+@app.route('/tables/<string:table_name>', methods=['GET'])
+def header(table_name):
+	con = db.connect(dbfile)
+	data = db.header(con, table_name)
+	db.diconnect(con)
+	return jsonify(data)
 
 if __name__ == "__main__":
 	app.run(debug=True)
