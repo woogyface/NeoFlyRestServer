@@ -2,7 +2,7 @@
 Just a simple rest server to expose Neo Fly DB. Created in Python 3.9. May run with Python 2.x but i dunno. I don't touch dirty.
 Testet with NeoFly 3.8.8.
 
-<b>WARNING: SQL STATEMENTS ARE NOT CHECKED FOR SAFTY. YOU CAN DESTROY YOUR DB WITH THAT. MAKE A BACKUP!<b>
+<b>WARNING: SQL STATEMENTS ARE NOT CHECKED FOR SAFTY. YOU CAN DESTROY YOUR DB WITH THAT. MAKE A BACKUP!</b>
 
 1. Install Python 3.x
 2. Install Flask
