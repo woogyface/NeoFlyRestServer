@@ -5,6 +5,7 @@ dbfile = "C:/ProgramData/NeoFly/common.db"
 db = nfdb()
 app = Flask(__name__)
 
+
 def has_no_empty_params(rule):
 	defaults = rule.defaults if rule.defaults is not None else ()
 	arguments = rule.arguments if rule.arguments is not None else ()
@@ -25,28 +26,37 @@ def site_map():
 		if "GET" in rule.methods and has_no_empty_params(rule):
 			url = url_for(rule.endpoint, **(rule.defaults or {}))
 			links.append(url)
-	return jsonify(links)
+
+	response = jsonify(links)
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
 
 @app.route('/query/<string:sql>', methods=['GET'])
 def query(sql):
 	con = db.connect(dbfile)
 	data = db.query(con, sql)
 	db.diconnect(con)
-	return jsonify(data)
+	response = jsonify(data)
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
 	
 @app.route('/tables', methods=['GET'])
 def tables():
 	con = db.connect(dbfile)
 	data = db.tables(con)
 	db.diconnect(con)
-	return jsonify(data)
+	response = jsonify(data)
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
 	
 @app.route('/tables/<string:table_name>', methods=['GET'])
 def header(table_name):
 	con = db.connect(dbfile)
 	data = db.header(con, table_name)
 	db.diconnect(con)
-	return jsonify(data)
+	response = jsonify(data)
+	response.headers.add('Access-Control-Allow-Origin', '*')
+	return response
 
 if __name__ == "__main__":
 	app.run(debug=True)
